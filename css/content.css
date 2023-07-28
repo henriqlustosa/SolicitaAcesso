@@ -1,0 +1,95 @@
+﻿:root {
+    --azul-hspm: #29336b;
+    --verde-hspm: #3b7b92;
+    --branco: #ffffff;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+.containerPerso{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.titleContent {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--azul-hspm);
+    text-decoration: underline var(--verde-hspm);
+    text-align: center;
+    padding: 0 0 2rem 0;
+}
+
+.labelForm{
+    font-weight:600;
+    font-size:1.2rem;
+}
+
+.divButton {
+    display: flex;
+    justify-content: center;
+}
+
+.btnPesquisar {
+    padding: 5px 10px;
+    border: 2px solid var(--azul-hspm);
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: var(--azul-hspm);
+    font-weight: 500;
+    margin-right:20px;
+}
+
+    .btnPesquisar:hover {
+        background-color: var(--verde-hspm);
+        color: #FFFFFF;
+        border: 2px solid var(--verde-hspm);
+    }
+
+.centerDiv{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.buttonCadastrar {
+    padding: 5px 10px;
+    border: 2px solid var(--azul-hspm);
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: var(--azul-hspm);
+    margin-bottom: 10px;
+    font-weight: 500;
+    margin: 0;
+}
+
+    .buttonCadastrar:hover {
+        background-color: var(--verde-hspm);
+        color: #FFFFFF;
+        border: 2px solid var(--verde-hspm);
+    }
+
+
+/*Página pesquisar paciente*/
+.separaBotao{
+    margin: 0 10px;
+}
+
+.btnSelecionar{
+    background-color:var(--branco);
+    color: var(--verde-hspm);
+    border: 1px solid var(--verde-hspm);
+    cursor:pointer;
+    padding: 8px;
+    border-radius:8px;
+}
+
+    .btnSelecionar:hover {
+        text-decoration: none;
+        background-color: var(--verde-hspm);
+        color: var(--branco);
+}

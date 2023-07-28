@@ -1,0 +1,112 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <%--<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />--%>
+    
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/masterPage.css" rel="stylesheet" />
+    <script defer src="bootstrap/js/bootstrap.min.js"></script>
+    <title>Solicitar acesso HSPM</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+     <script type="text/javascript">
+        function mostraAdm() {
+
+            var div = document.getElementById('DivAdm');
+
+            if (div.style.display == 'none') {
+                div.style.display = 'block';
+            }
+            else {
+                div.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header class="fixed-top spaceHeader">
+            <div>
+                <a>
+                    <img class="imgHSPM" src="../img/Logo_HSPM_Branco_com fundo azul-01.jpg" />
+                </a>
+            </div>
+            <div>
+                <h1 class="titleHeader">HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL - HSPM</h1>
+            </div>
+            <div>
+                <a>
+                    <img class="imgPrefeitura" src="../img/Logo branco com fundo azul-01.jpg" />
+                </a>
+            </div>
+        </header>
+        <main>
+            <aside class="spaceMenu">
+                <div id="menu">
+                    <ul class="list-unstyled">
+                        <li class="space-item">
+                            <a href="../Solicitar.aspx" class="nav-link px-0">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Pagina Inicial</span>
+                            </a>
+                        </li>
+                        <li class="space-item">
+                            <a href="../usuario/CadastarVisitanteExtra.aspx" class="nav-link px-0">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Minhas Solicitaçoês</span>
+                            </a>
+                        </li>
+                        <li class="space-item">
+                            <a href="../AlterarSenha.aspx" class="nav-link px-0">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Alterar Senha</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <br /><br />
+                      <div class="nav justify-content-xl-start">
+                            <input id="BtnAdm" type="button" value="Informatica" onclick="mostraAdm()" class="btn btn-outline-info border-0 border-white text-white font-italic btn-lg font-weight-bold" />
+                        </div>
+                      <br />
+                        <div id="DivAdm" class="border" style='display: none;'>
+                            <li class="space-item">
+                                <a href="../adm/CadastrarCoordenador.aspx" class="nav-link px-0">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Cadastrar Coordenador</span>
+                                </a>
+                            </li>  
+                            <li class="space-item">
+                                <a href="../adm/CadastrarUsuario.aspx" class="nav-link px-0">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Cadastrar Usuário</span>
+                                </a>
+                            </li>
+                            <li class="space-item">
+                                <a href="../adm/Permissao.aspx" class="nav-link px-0">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Permissão Usuário</span>
+                                </a>
+                            </li>
+                            <li class="space-item">
+                                <a href="../adm/DeletarUsuario.aspx" class="nav-link px-0">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Deletar Usuário</span>
+                                </a>
+                            </li>
+
+                        </div>
+                     <br /><br />
+                        <asp:LoginName ID="LoginName1" runat="server" class="text-white font-weight-bold" />
+                        <br /><br />
+                        <asp:LoginStatus ID="LoginStatus1" runat="server" class="text-white font-weight-bold"/>
+
+                </div>
+            </aside>
+        </main>
+        <div class="spaceContent">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <footer class="spaceFooter fixed-bottom">
+            <div>
+                <p class="paragraphFooter">Desenvolvido pelo setor de informática do HSPM - hspminformatica@hspm.sp.gov.br</p>
+            </div>
+        </footer>
+    </form>
+</body>
+</html>
