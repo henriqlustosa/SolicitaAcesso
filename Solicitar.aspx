@@ -18,6 +18,7 @@
     </script>
     <div class="container">
         <h4 class="text-center">Solicitação de Acesso à Rede e Sistemas HSPM </h4>
+                <asp:Label ID="LabelJaExiste" runat="server" Text="" Visible="False"></asp:Label>
         <asp:Label ID="pegaNomeLoginUsuario" runat="server" Text="" Visible="False"></asp:Label>
         <asp:Label runat="server" ID="labelIdChamado" Text="Label" Visible="False"></asp:Label>
         <div class="row">

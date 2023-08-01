@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
+
 public partial class Solicitar : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
@@ -13,8 +15,7 @@ public partial class Solicitar : System.Web.UI.Page
         {
             pegaNomeLoginUsuario.Text = User.Identity.Name.ToUpper();
             carregaDadosDoCoordenador();
-            txtData.Text = DateTime.Now.ToShortDateString();
-            // EscondeCampos();
+            txtData.Text = DateTime.Now.ToShortDateString();            
         }
         verificaCBK();
     }
@@ -23,43 +24,35 @@ public partial class Solicitar : System.Web.UI.Page
     {
         if (CkbRedeCorporativa.Checked == true)
         {
-            PanelRedeCorporativa.Visible = true;
-            // mostraConteudoRedeCorporativa();
+            PanelRedeCorporativa.Visible = true;          
         }
         if (CkbRedeCorporativa.Checked == false)
         {
-            PanelRedeCorporativa.Visible = false;
-            // escondeConteudoRedeCorporativa();
+            PanelRedeCorporativa.Visible = false;           
         }
         if (ckbSGHexibe.Checked == true)
         {
-            PanelSGH.Visible = true;
-            //  mostraConteudoSGH();
+            PanelSGH.Visible = true;           
         }
         if (ckbSGHexibe.Checked == false)
         {
-            PanelSGH.Visible = false;
-            //  escondeConteudoSGH();
+            PanelSGH.Visible = false;            
         }
         if (ckbExibeSimproc.Checked == true)
         {
-            PanelSimproc.Visible = true;
-            //   mostraConteudoSimproc();
+            PanelSimproc.Visible = true;           
         }
         if (ckbExibeSimproc.Checked == false)
         {
-            PanelSimproc.Visible = false;
-            //   escondeConteudoSimproc();
+            PanelSimproc.Visible = false;           
         }
         if (ckbExibeGrafica.Checked == true)
         {
-            PanelGrafica.Visible = true;
-            //  mostraConteudoGrafica();
+            PanelGrafica.Visible = true;           
         }
         if (ckbExibeGrafica.Checked == false)
         {
-            PanelGrafica.Visible = false;
-            //  escondeConteudoGrafica();
+            PanelGrafica.Visible = false;           
         }
         if (ckbOSmanutencao.Checked == true)
         {
@@ -82,28 +75,59 @@ public partial class Solicitar : System.Web.UI.Page
     protected void btnCadastrar_Click(object sender, EventArgs e)
     {
         cadastrarDadosDoSolicitante();
-        if (CkbRedeCorporativa.Checked == true)
+       
+
+        if (LabelJaExiste.Text == "NAO")
         {
-            cadastrarRedeCorporativa();
+            if (CkbRedeCorporativa.Checked == true)
+            {
+                cadastrarRedeCorporativa();
+            }
+            if (ckbSGHexibe.Checked == true)
+            {
+                cadastrarSGH();
+            }
+            if (ckbExibeSimproc.Checked == true)
+            {
+                cadastrarSimproc();
+            }
         }
-        
-        if (ckbSGHexibe.Checked == true)
+        else if (LabelJaExiste.Text == "SIM")
         {
-            cadastrarSGH();
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Já existe Solicitação pedente para esse Funcionario, Espere a Informatica dar baixa em todos os Itens da Solicitação que está ativa ou Ligue 8123 ou 8124 e verifique a Situação!');", true);
+
         }
+
+
+
+    }
+
+    private void cadastrarSimproc()
+    {
+        DadosSimproc d = new DadosSimproc();
+        d.id_chamado_Simproc = Convert.ToInt32(labelIdChamado.Text);
+        d.CodigoUnidade_Simproc = txtSimprocCodigoUnidade.Text;
+        d.cpf_simproc = txtSimprocCPF.Text;
+        d.rg_simproc = txtSimprocRG.Text;
+        d.dataAdmissao = txtDtAdmissao.Text;    
+        d.status_Simproc = "S";
+        SolicitaAcessoDAO.GravaDadosSImproc(d);
     }
 
     private void cadastrarSGH()
     {
         DadosSGH d = new DadosSGH();
+        d.id_chamado_SGH= Convert.ToInt32(labelIdChamado.Text);
         d.Amb = CkbSGHamb.Checked.ToString();
         d.Amb_Desc = txtSGHAmb.Text;
         d.CenCir = CkbCenCir.Checked.ToString();
         d.CenCir_Desc = txtSGHcentroCirurgico.Text;
-        d.Amb = CkbSGHamb.Checked.ToString();
-        d.Amb_Desc = txtSGHAmb.Text;
-        d.Amb = CkbSGHamb.Checked.ToString();
-        d.Amb_Desc = txtSGHAmb.Text;
+        d.Internacao = CkbSGHInternacao.Checked.ToString();
+        d.Internacao_Desc = txtSGHInternacao.Text;
+        d.PS = CkbSGHprontoSocorro.Checked.ToString();
+        d.PS_Desc = txtSGHProntoSocorro.Text;
+        d.status_SGH = "S";
+        SolicitaAcessoDAO.GravaDadosSGH(d);
     }
 
     private void cadastrarRedeCorporativa()
@@ -156,14 +180,16 @@ public partial class Solicitar : System.Web.UI.Page
         if (Result == false)
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Solicitação Gravada com suecesso!');", true);
+            LabelJaExiste.Text = "NAO";
         }
         else if (Result == true)
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Já existe Solicitação pedente para esse Funcionario, Espere a Informatica dar baixa em todos os Itens da Solicitação que está ativa ou Ligue 8123 ou 8124 e verifique a Situação!');", true);
+            LabelJaExiste.Text = "SIM";   
         }
     }
     private void carregaDadosDoCoordenador()
     {
+        
         //carrega os campos textos (Feito pelo Henrique)
         DadosCoordenador lista = new DadosCoordenador();
         lista = SolicitaAcessoDAO.GetDadosDosCoordenadoresPaginaSolicita(pegaNomeLoginUsuario.Text);
@@ -171,171 +197,5 @@ public partial class Solicitar : System.Web.UI.Page
         txtLotacao.Text = lista.setorCoordenador;
         txtSolicitante.Text = lista.NomeCoordenador;
     }
-    //private void EscondeCampos()
-    //{
-
-    //    //rede corperativa        
-    //    rdAcesso.Visible = false;
-    //    rdBloqueio.Visible = false;
-    //    rdAtualizar.Visible = false;
-    //    CkbEmail.Visible = false;
-    //    CkbCaixaDepartamental.Visible = false;
-    //    CkbPastaRede.Visible = false;
-    //    txtEspecificarRedeCorporativa.Visible = false;
-    //    //SGH
-    //    CkbSGHamb.Visible = false;
-    //    CkbSGH.Visible = false;
-    //    CkbSGHInternacao.Visible = false;
-    //    CkbSGHprontoSocorro.Visible = false;
-    //    txtSGHAmb.Visible = false;
-    //    txtSGHcentroCirurgico.Visible = false;
-    //    txtSGHInternacao.Visible = false;
-    //    txtSGHProntoSocorro.Visible = false;
-    //    //Simproc
-    //    labelSimprocCodicoUnidade.Visible = false;
-    //    labelSimprocCPF.Visible = false;
-    //    labelSimprocRG.Visible = false;
-    //    labelSimprocDataAdmissao.Visible = false;
-    //    txtSimprocCodigoUnidade.Visible = false;
-    //    txtSimprocCPF.Visible = false;
-    //    txtSimprocRG.Visible = false;
-    //    txtDtAdmissao.Visible = false;
-    //    //Grafica
-    //    ckbCentral.Visible = false;
-    //    ckbGrafica.Visible = false;
-    //    ckbfarmacia.Visible = false;
-    //    ckbSND.Visible = false;
-    //    ckbManutencao.Visible = false;
-    //    ckbMecanica.Visible = false;
-    //    ckbEstoqueLab.Visible = false;
-    //    labelNcentroCusto.Visible = false;//Todo
-    //    labelnovoGrafica.Visible = false;
-    //    txtNcentroDeCustoGrafica.Visible = false;
-    //    labelGraficaCpf.Visible = false;
-    //    txtCPFgrafica.Visible = false;
-    //    labelGraficaCota.Visible = false;
-    //    rdbDiaria.Visible = false;
-    //    rdbSemanal.Visible = false;
-    //    rdbQuinzenal.Visible = false;
-    //    rdbMensal.Visible = false;
-    //   //OS-Manutencao
-    //}
-
-    //private void escondeConteudoRedeCorporativa()
-    //{
-    //    labelRedeCorporativa.Visible = false;
-    //    rdAcesso.Visible = false;
-    //    rdBloqueio.Visible = false;
-    //    rdAtualizar.Visible = false;
-    //    CkbEmail.Visible = false;
-    //    CkbCaixaDepartamental.Visible = false;
-    //    CkbPastaRede.Visible = false;
-    //    txtEspecificarRedeCorporativa.Visible = false;
-    //}
-
-    //private void mostraConteudoRedeCorporativa()
-    //{
-    //    labelRedeCorporativa.Visible = true;
-    //    rdAcesso.Visible = true;
-    //    rdBloqueio.Visible = true;
-    //    rdAtualizar.Visible = true;
-    //    CkbEmail.Visible = true;
-    //    CkbCaixaDepartamental.Visible = true;
-    //    CkbPastaRede.Visible = true;
-    //    txtEspecificarRedeCorporativa.Visible = true;
-    //}
-
-    //private void escondeConteudoSGH()
-    //{
-    //    labelSGH.Visible = false;
-    //    CkbSGHamb.Visible = false;
-    //    CkbSGH.Visible = false;
-    //    CkbSGHInternacao.Visible = false;
-    //    CkbSGHprontoSocorro.Visible = false;
-    //    txtSGHAmb.Visible = false;
-    //    txtSGHcentroCirurgico.Visible = false;
-    //    txtSGHInternacao.Visible = false;
-    //    txtSGHProntoSocorro.Visible = false;
-    //}
-
-    //private void mostraConteudoSGH()
-    //{
-    //    labelSGH.Visible = true;
-    //    CkbSGHamb.Visible = true;
-    //    CkbSGH.Visible = true;
-    //    CkbSGHInternacao.Visible = true;
-    //    CkbSGHprontoSocorro.Visible = true;
-    //    txtSGHAmb.Visible = true;
-    //    txtSGHcentroCirurgico.Visible = true;
-    //    txtSGHInternacao.Visible = true;
-    //    txtSGHProntoSocorro.Visible = true;
-    //}
-    //private void escondeConteudoSimproc()
-    //{
-    //    labelSimproc.Visible = false;
-    //    labelSimprocCodicoUnidade.Visible = false;
-    //    labelSimprocCPF.Visible = false;
-    //    labelSimprocRG.Visible = false;
-    //    labelSimprocDataAdmissao.Visible = false;
-    //    txtSimprocCodigoUnidade.Visible = false;
-    //    txtSimprocCPF.Visible = false;
-    //    txtSimprocRG.Visible = false;
-    //    txtDtAdmissao.Visible = false;
-    //}
-
-    //private void mostraConteudoSimproc()
-    //{
-    //    labelSimproc.Visible = true;
-    //    labelSimprocCodicoUnidade.Visible = true;
-    //    labelSimprocCPF.Visible = true;
-    //    labelSimprocRG.Visible = true;
-    //    labelSimprocDataAdmissao.Visible = true;
-    //    txtSimprocCodigoUnidade.Visible = true;
-    //    txtSimprocCPF.Visible = true;
-    //    txtSimprocRG.Visible = true;
-    //    txtDtAdmissao.Visible = true;
-    //}
-    //private void escondeConteudoGrafica()
-    //{
-    //    labelGrafica.Visible = false;
-    //    ckbCentral.Visible = false;
-    //    ckbGrafica.Visible = false;
-    //    ckbfarmacia.Visible = false;
-    //    ckbSND.Visible = false;
-    //    ckbManutencao.Visible = false;
-    //    ckbMecanica.Visible = false;
-    //    ckbEstoqueLab.Visible = false;
-    //    labelNcentroCusto.Visible = false;//Todo
-    //    labelnovoGrafica.Visible = false;
-    //    txtNcentroDeCustoGrafica.Visible = false;
-    //    labelGraficaCpf.Visible = false;
-    //    txtCPFgrafica.Visible = false;
-    //    labelGraficaCota.Visible = false;
-    //    rdbDiaria.Visible = false;
-    //    rdbSemanal.Visible = false;
-    //    rdbQuinzenal.Visible = false;
-    //    rdbMensal.Visible = false;
-    //}
-
-    //private void mostraConteudoGrafica()
-    //{
-    //    labelGrafica.Visible = true;
-    //    ckbCentral.Visible = true;
-    //    ckbGrafica.Visible = true;
-    //    ckbfarmacia.Visible = true;
-    //    ckbSND.Visible = true;
-    //    ckbManutencao.Visible = true;
-    //    ckbMecanica.Visible = true;
-    //    ckbEstoqueLab.Visible = true;
-    //    labelNcentroCusto.Visible = true;//Todo
-    //    labelnovoGrafica.Visible = true;
-    //    txtNcentroDeCustoGrafica.Visible = true;
-    //    labelGraficaCpf.Visible = true;
-    //    txtCPFgrafica.Visible = true;
-    //    labelGraficaCota.Visible = true;
-    //    rdbDiaria.Visible = true;
-    //    rdbSemanal.Visible = true;
-    //    rdbQuinzenal.Visible = true;
-    //    rdbMensal.Visible = true;
-    //}
+  
 }

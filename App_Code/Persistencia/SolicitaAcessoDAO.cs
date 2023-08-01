@@ -313,4 +313,39 @@ public class SolicitaAcessoDAO
             }
         }
     }
+
+    public static void GravaDadosSImproc(DadosSimproc Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[Simproc]
+           ([id_chamdo_simproc]
+           ,[cod_Unidade]
+           ,[cpf_simproc]
+           ,[rg_simproc]
+           ,[dataAdmissao]
+           ,[status_Simproc])"
+     + " VALUES (@id_chamdo_simproc,@cod_Unidade,@cpf_simproc,@rg_simproc,@dataAdmissao,@status_Simproc)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamdo_simproc", SqlDbType.Int).Value = Dados.id_chamado_Simproc;
+                commd.Parameters.Add("@cod_Unidade", SqlDbType.VarChar).Value = Dados.CodigoUnidade_Simproc;
+                commd.Parameters.Add("@cpf_simproc", SqlDbType.VarChar).Value = Dados.cpf_simproc;
+                commd.Parameters.Add("@rg_simproc", SqlDbType.VarChar).Value = Dados.rg_simproc;
+                commd.Parameters.Add("@dataAdmissao", SqlDbType.VarChar).Value = Dados.dataAdmissao;
+                commd.Parameters.Add("@status_Simproc", SqlDbType.VarChar).Value = Dados.status_Simproc;
+               
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
 }
