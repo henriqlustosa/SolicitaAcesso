@@ -89,9 +89,9 @@
             <div id="DivRedeCorporativa">
                 <div class="row">
                     <div class="col-5">
-                        <asp:RadioButton ID="rdAcesso" Text="Acesso&nbsp;" runat="server" GroupName="redeCorporativa"></asp:RadioButton>
-                        <asp:RadioButton ID="rdBloqueio" Text="Bloqueio&nbsp;" runat="server" GroupName="redeCorporativa"></asp:RadioButton>
-                        <asp:RadioButton ID="rdAtualizar" Text="Atualizar" runat="server" GroupName="redeCorporativa"></asp:RadioButton>
+                        <asp:RadioButton ID="rdAcesso" Text="Acesso&nbsp;" runat="server" GroupName="redeCorporativa1"></asp:RadioButton>
+                        <asp:RadioButton ID="rdBloqueio" Text="Bloqueio&nbsp;" runat="server" GroupName="redeCorporativa1"></asp:RadioButton>
+                        <asp:RadioButton ID="rdAtualizar" Text="Atualizar" runat="server" GroupName="redeCorporativa1"></asp:RadioButton>
                     </div>
                 </div>
                 <div class="row">
@@ -122,7 +122,7 @@
                         <asp:CheckBox ID="CkbSGHamb" Text="&nbsp; Ambulatório" runat="server"></asp:CheckBox>
                     </div>
                     <div class="col-3">
-                        <asp:CheckBox ID="CkbSGH" Text="&nbsp; Centro Cirurgico" runat="server"></asp:CheckBox>
+                        <asp:CheckBox ID="CkbCenCir" Text="&nbsp; Centro Cirurgico" runat="server"></asp:CheckBox>
                     </div>
                     <div class="col-3">
                         <asp:CheckBox ID="CkbSGHInternacao" Text="&nbsp; Internação" runat="server"></asp:CheckBox>

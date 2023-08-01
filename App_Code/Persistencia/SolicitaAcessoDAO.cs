@@ -235,4 +235,82 @@ public class SolicitaAcessoDAO
 
         return valido;
     }
+
+    public static void GravaDadosRedeCorporativa(DadosRedeCoorporativa Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[RedeCorporativa]
+           ([id_chamado_rede_corporativa]
+           ,[redeCorperativa]
+           ,[emailCorporativo]
+           ,[caixaDepartamental]
+           ,[pastaRede]
+           ,[pastaEspecifica]
+           ,[status_RedeCorporativa])"
+     + " VALUES (@id_chamado_rede_corporativa,@redeCorperativa,@emailCorporativo,@caixaDepartamental,@pastaRede,@pastaEspecifica,@status_RedeCorporativa)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamado_rede_corporativa", SqlDbType.Int).Value = Dados.id_chamado_rede_corporativa;
+                commd.Parameters.Add("@redeCorperativa", SqlDbType.VarChar).Value = Dados.redeCorporativa;
+                commd.Parameters.Add("@emailCorporativo", SqlDbType.VarChar).Value = Dados.emailCorporativo;
+                commd.Parameters.Add("@caixaDepartamental", SqlDbType.VarChar).Value = Dados.caixaDepartamental;
+                commd.Parameters.Add("@pastaRede", SqlDbType.VarChar).Value = Dados.pastaDeRede;
+                commd.Parameters.Add("@pastaEspecifica", SqlDbType.VarChar).Value = Dados.PastaEspecifica;
+                commd.Parameters.Add("@status_RedeCorporativa", SqlDbType.VarChar).Value = Dados.status_redeCoorporativa;
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
+
+    public static void GravaDadosSGH(DadosSGH Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[Sgh]
+           ([id_chamado_sgh]
+           ,[Amb]
+           ,[Amb_Desc]
+           ,[CenCir]
+           ,[CenCir_Desc]
+           ,[Internacao]
+           ,[Internacao_Desc]
+           ,[Ps]
+           ,[Ps_Desc]
+           ,[status_Sgh])"
+     + " VALUES (@id_chamado_sgh,@Amb,@Amb_Desc,@CenCir,@CenCir_Desc,@Internacao,@Internacao_Desc,@Ps,@Ps_Desc,@status_Sgh)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamado_sgh", SqlDbType.Int).Value = Dados.id_chamado_SGH;
+                commd.Parameters.Add("@Amb", SqlDbType.VarChar).Value = Dados.Amb;
+                commd.Parameters.Add("@Amb_Desc", SqlDbType.VarChar).Value = Dados.Amb_Desc;
+                commd.Parameters.Add("@CenCir", SqlDbType.VarChar).Value = Dados.CenCir;
+                commd.Parameters.Add("@CenCir_Desc", SqlDbType.VarChar).Value = Dados.CenCir_Desc;
+                commd.Parameters.Add("@Internacao", SqlDbType.VarChar).Value = Dados.Internacao;
+                commd.Parameters.Add("@Internacao_Desc", SqlDbType.VarChar).Value = Dados.Internacao_Desc;
+                commd.Parameters.Add("@Ps", SqlDbType.VarChar).Value = Dados.PS;
+                commd.Parameters.Add("@Ps_Desc", SqlDbType.VarChar).Value = Dados.PS_Desc;
+                commd.Parameters.Add("@status_Sgh", SqlDbType.VarChar).Value = Dados.status_SGH;
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
 }

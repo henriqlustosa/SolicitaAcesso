@@ -14,7 +14,7 @@ public partial class Solicitar : System.Web.UI.Page
             pegaNomeLoginUsuario.Text = User.Identity.Name.ToUpper();
             carregaDadosDoCoordenador();
             txtData.Text = DateTime.Now.ToShortDateString();
-           // EscondeCampos();
+            // EscondeCampos();
         }
         verificaCBK();
     }
@@ -54,14 +54,14 @@ public partial class Solicitar : System.Web.UI.Page
         if (ckbExibeGrafica.Checked == true)
         {
             PanelGrafica.Visible = true;
-          //  mostraConteudoGrafica();
+            //  mostraConteudoGrafica();
         }
         if (ckbExibeGrafica.Checked == false)
         {
             PanelGrafica.Visible = false;
-          //  escondeConteudoGrafica();
+            //  escondeConteudoGrafica();
         }
-        if (ckbOSmanutencao.Checked==true)
+        if (ckbOSmanutencao.Checked == true)
         {
             PanelOsManutencao.Visible = true;
         }
@@ -78,10 +78,57 @@ public partial class Solicitar : System.Web.UI.Page
             PanelSEI.Visible = false;
         }
     }
-    
+
     protected void btnCadastrar_Click(object sender, EventArgs e)
     {
         cadastrarDadosDoSolicitante();
+        if (CkbRedeCorporativa.Checked == true)
+        {
+            cadastrarRedeCorporativa();
+        }
+        
+        if (ckbSGHexibe.Checked == true)
+        {
+            cadastrarSGH();
+        }
+    }
+
+    private void cadastrarSGH()
+    {
+        DadosSGH d = new DadosSGH();
+        d.Amb = CkbSGHamb.Checked.ToString();
+        d.Amb_Desc = txtSGHAmb.Text;
+        d.CenCir = CkbCenCir.Checked.ToString();
+        d.CenCir_Desc = txtSGHcentroCirurgico.Text;
+        d.Amb = CkbSGHamb.Checked.ToString();
+        d.Amb_Desc = txtSGHAmb.Text;
+        d.Amb = CkbSGHamb.Checked.ToString();
+        d.Amb_Desc = txtSGHAmb.Text;
+    }
+
+    private void cadastrarRedeCorporativa()
+    {
+        DadosRedeCoorporativa d = new DadosRedeCoorporativa();
+        d.id_chamado_rede_corporativa = Convert.ToInt32(labelIdChamado.Text);
+        if (rdAcesso.Checked == true)
+        {
+            d.redeCorporativa = rdAcesso.Text;
+        }
+        if (rdBloqueio.Checked == true)
+        {
+            d.redeCorporativa = rdBloqueio.Text;
+        }
+        if (rdAtualizar.Checked == true)
+        {
+            d.redeCorporativa = rdAtualizar.Text;
+        }
+        d.emailCorporativo = CkbEmail.Checked.ToString();
+        d.caixaDepartamental = CkbCaixaDepartamental.Checked.ToString();
+        d.pastaDeRede = CkbPastaRede.Checked.ToString();
+        d.PastaEspecifica = txtEspecificarRedeCorporativa.Text;
+        d.status_redeCoorporativa = "S";
+        SolicitaAcessoDAO.GravaDadosRedeCorporativa(d);
+
     }
 
     private void cadastrarDadosDoSolicitante()
@@ -96,8 +143,9 @@ public partial class Solicitar : System.Web.UI.Page
         d.dtSolicitacao = DateTime.Now;
         d.NomeSolicitante_Coordenador = txtSolicitante.Text;
 
-        labelIdChamado.Text = Convert.ToString(SolicitaAcessoDAO.pegaID_BancoDeDados(d.dtSolicitacao, d.RF_Funcionario));
+
         bool Result = SolicitaAcessoDAO.GravaDadosSolicitacao(d);
+        labelIdChamado.Text = Convert.ToString(SolicitaAcessoDAO.pegaID_BancoDeDados(d.dtSolicitacao, d.RF_Funcionario));
 
         if (CkbRedeCorporativa.Checked == true && Result == false)
         {
@@ -114,7 +162,6 @@ public partial class Solicitar : System.Web.UI.Page
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Já existe Solicitação pedente para esse Funcionario, Espere a Informatica dar baixa em todos os Itens da Solicitação que está ativa ou Ligue 8123 ou 8124 e verifique a Situação!');", true);
         }
     }
-
     private void carregaDadosDoCoordenador()
     {
         //carrega os campos textos (Feito pelo Henrique)
