@@ -348,4 +348,106 @@ public class SolicitaAcessoDAO
             }
         }
     }
+
+    public static void GravaDadosGrafica(DadosGrafica Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[Grafica]
+           ([id_chamado_grafica]           
+           ,[setor_solicitado_Grafica]
+           ,[N_centro_custo_grafica]
+           ,[cpf_grafica]
+           ,[cota_grafica]
+           ,[status_grafica])    
+             VALUES (@id_chamado_grafica,@setor_solicitado_Grafica,@N_centro_custo_grafica,@cpf_grafica,@cota_grafica,@status_grafica)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamado_grafica", SqlDbType.Int).Value = Dados.id_chamado_grafica;
+                commd.Parameters.Add("@setor_solicitado_Grafica", SqlDbType.VarChar).Value = Dados.setor_solicitado_Grafica;
+                commd.Parameters.Add("@N_centro_custo_grafica", SqlDbType.VarChar).Value = Dados.N_centro_custo_grafica;
+                commd.Parameters.Add("@cpf_grafica", SqlDbType.VarChar).Value = Dados.cpf_grafica;
+                commd.Parameters.Add("@cota_grafica", SqlDbType.VarChar).Value = Dados.cota_grafica;
+                commd.Parameters.Add("@status_grafica", SqlDbType.VarChar).Value = Dados.status_grafica;
+
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
+
+    public static void GravaDadosOSmanutencao(DadosOsManutencao Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[OsManutencao]
+           ([id_chamado_manutencao]       
+           ,[N_centro_custos]
+           ,[cpf_manutencao]
+           ,[status_os_manutencao])
+           VALUES (@id_chamado_manutencao,@N_centro_custos,@cpf_manutencao,@status_os_manutencao)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamado_manutencao", SqlDbType.Int).Value = Dados.id_chamado_OSmanutencao;
+                commd.Parameters.Add("@N_centro_custos", SqlDbType.VarChar).Value = Dados.N_centro_custos;
+                commd.Parameters.Add("@cpf_manutencao", SqlDbType.VarChar).Value = Dados.cpf_manutencao;
+                commd.Parameters.Add("@status_os_manutencao", SqlDbType.VarChar).Value = Dados.status_os_manutencao;               
+
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
+
+    public static void GravaDadosSei(DadosSei Dados)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[Sei]
+           ([id_chamado_Sei]
+           ,[siglasUnidades1]
+           ,[siglasUnidades2]
+           ,[siglasUnidades3]
+           ,[siglasUnidades4]
+           ,[status_Sei])
+           VALUES (@id_chamado_Sei,@siglasUnidades1,@siglasUnidades2,@siglasUnidades3,@siglasUnidades4,@status_Sei)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@id_chamado_Sei", SqlDbType.Int).Value = Dados.id_chamado_Sei;
+                commd.Parameters.Add("@siglasUnidades1", SqlDbType.VarChar).Value = Dados.siglasUnidades1;
+                commd.Parameters.Add("@siglasUnidades2", SqlDbType.VarChar).Value = Dados.siglasUnidades2;
+                commd.Parameters.Add("@siglasUnidades3", SqlDbType.VarChar).Value = Dados.siglasUnidades3;
+                commd.Parameters.Add("@siglasUnidades4", SqlDbType.VarChar).Value = Dados.siglasUnidades4;
+                commd.Parameters.Add("@status_Sei", SqlDbType.VarChar).Value = Dados.status_Sei;
+
+
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
 }

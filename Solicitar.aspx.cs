@@ -22,19 +22,19 @@ public partial class Solicitar : System.Web.UI.Page
 
     private void verificaCBK()
     {
-        if (CkbRedeCorporativa.Checked == true)
+        if (CkbExibeRedeCorporativa.Checked == true)
         {
             PanelRedeCorporativa.Visible = true;          
         }
-        if (CkbRedeCorporativa.Checked == false)
+        if (CkbExibeRedeCorporativa.Checked == false)
         {
             PanelRedeCorporativa.Visible = false;           
         }
-        if (ckbSGHexibe.Checked == true)
+        if (ckbExibeSGH.Checked == true)
         {
             PanelSGH.Visible = true;           
         }
-        if (ckbSGHexibe.Checked == false)
+        if (ckbExibeSGH.Checked == false)
         {
             PanelSGH.Visible = false;            
         }
@@ -54,19 +54,19 @@ public partial class Solicitar : System.Web.UI.Page
         {
             PanelGrafica.Visible = false;           
         }
-        if (ckbOSmanutencao.Checked == true)
+        if (ckbExibeOSmanutencao.Checked == true)
         {
             PanelOsManutencao.Visible = true;
         }
-        if (ckbOSmanutencao.Checked == false)
+        if (ckbExibeOSmanutencao.Checked == false)
         {
             PanelOsManutencao.Visible = false;
         }
-        if (ckbSEI.Checked == true)
+        if (ckbExibeSEI.Checked == true)
         {
             PanelSEI.Visible = true;
         }
-        if (ckbSEI.Checked == false)
+        if (ckbExibeSEI.Checked == false)
         {
             PanelSEI.Visible = false;
         }
@@ -79,11 +79,11 @@ public partial class Solicitar : System.Web.UI.Page
 
         if (LabelJaExiste.Text == "NAO")
         {
-            if (CkbRedeCorporativa.Checked == true)
+            if (CkbExibeRedeCorporativa.Checked == true)
             {
                 cadastrarRedeCorporativa();
             }
-            if (ckbSGHexibe.Checked == true)
+            if (ckbExibeSGH.Checked == true)
             {
                 cadastrarSGH();
             }
@@ -91,15 +91,71 @@ public partial class Solicitar : System.Web.UI.Page
             {
                 cadastrarSimproc();
             }
+            if (ckbExibeGrafica.Checked == true)
+            {
+                cadastrarGrafica();
+            }
+            if (ckbExibeOSmanutencao.Checked == true)
+            {
+                cadastrarOSmanutencao();
+            }
+            if (ckbExibeSEI.Checked == true)
+            {
+                cadastrarSei();
+            }
         }
         else if (LabelJaExiste.Text == "SIM")
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Já existe Solicitação pedente para esse Funcionario, Espere a Informatica dar baixa em todos os Itens da Solicitação que está ativa ou Ligue 8123 ou 8124 e verifique a Situação!');", true);
-
         }
 
+    }
 
+    private void cadastrarSei()
+    {
+        DadosSei d = new DadosSei();
+        d.id_chamado_Sei = Convert.ToInt32(labelIdChamado.Text);
+        d.siglasUnidades1 = txtSei_1.Text;
+        d.siglasUnidades2 = txtSei_2.Text;
+        d.siglasUnidades3 = txtSei_3.Text;
+        d.siglasUnidades4 = txtSei_4.Text;  
 
+        d.status_Sei = "S";
+        SolicitaAcessoDAO.GravaDadosSei(d);
+    }
+
+    private void cadastrarOSmanutencao()
+    {
+        DadosOsManutencao d = new DadosOsManutencao();
+        d.id_chamado_OSmanutencao = Convert.ToInt32(labelIdChamado.Text);
+        d.N_centro_custos = txtCentroDeCustoOS_Manutencao.Text;
+        d.cpf_manutencao = txtCpfOS_Manutencao.Text;    
+       
+        d.status_os_manutencao = "S";
+        SolicitaAcessoDAO.GravaDadosOSmanutencao(d);
+    }
+
+    private void cadastrarGrafica()
+    {
+        DadosGrafica d = new DadosGrafica();
+        d.id_chamado_grafica= Convert.ToInt32(labelIdChamado.Text);
+        d.N_centro_custo_grafica = txtNcentroDeCustoGrafica.Text;
+        d.cpf_grafica = txtCPFgrafica.Text;
+        d.cota_grafica = RblCota.SelectedValue;
+        d.status_grafica = "S";
+        for (int i = 0; i < CkbListGraficaSetor.Items.Count; i++)
+        {
+            if (CkbListGraficaSetor.Items[i].Selected)
+            {
+
+                d.setor_solicitado_Grafica += " ( " +CkbListGraficaSetor.Items[i].Text + " ) ";
+
+            }
+        }
+
+        SolicitaAcessoDAO.GravaDadosGrafica(d);
+
+        //d.setor_solicitado_Grafica = 
     }
 
     private void cadastrarSimproc()
@@ -171,11 +227,11 @@ public partial class Solicitar : System.Web.UI.Page
         bool Result = SolicitaAcessoDAO.GravaDadosSolicitacao(d);
         labelIdChamado.Text = Convert.ToString(SolicitaAcessoDAO.pegaID_BancoDeDados(d.dtSolicitacao, d.RF_Funcionario));
 
-        if (CkbRedeCorporativa.Checked == true && Result == false)
-        {
-            DadosRedeCoorporativa r = new DadosRedeCoorporativa();
-            r.id_chamado_rede_corporativa = Convert.ToInt32(labelIdChamado.Text);
-        }
+        ////if (CkbExibeRedeCorporativa.Checked == true && Result == false)
+        ////{
+        ////    DadosRedeCoorporativa r = new DadosRedeCoorporativa();
+        ////    r.id_chamado_rede_corporativa = Convert.ToInt32(labelIdChamado.Text);
+        ////}
 
         if (Result == false)
         {
@@ -187,6 +243,7 @@ public partial class Solicitar : System.Web.UI.Page
             LabelJaExiste.Text = "SIM";   
         }
     }
+
     private void carregaDadosDoCoordenador()
     {
         

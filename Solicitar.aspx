@@ -61,10 +61,10 @@
         <br />
         <div class="row">
             <div class="col-2">
-                <asp:CheckBox ID="CkbRedeCorporativa" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Rede Corporativa &nbsp; " Width="180px" BorderWidth="2"></asp:CheckBox>
+                <asp:CheckBox ID="CkbExibeRedeCorporativa" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Rede Corporativa &nbsp; " Width="180px" BorderWidth="2"></asp:CheckBox>
             </div>
             <div class="col-2">
-                <asp:CheckBox ID="ckbSGHexibe" runat="server" AutoPostBack="True" Text="&nbsp;SGH &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" class="form-control" BorderWidth="2"></asp:CheckBox>
+                <asp:CheckBox ID="ckbExibeSGH" runat="server" AutoPostBack="True" Text="&nbsp;SGH &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" class="form-control" BorderWidth="2"></asp:CheckBox>
             </div>
             <div class="col-2">
                 <asp:CheckBox ID="ckbExibeSimproc" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Simproc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
@@ -75,11 +75,11 @@
 
             </div>
             <div class="col-2">
-                <asp:CheckBox ID="ckbOSmanutencao" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;OS-Manutenção &nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
+                <asp:CheckBox ID="ckbExibeOSmanutencao" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;OS-Manutenção &nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
 
             </div>
             <div class="col-2">
-                <asp:CheckBox ID="ckbSEI" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;SEI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="160px" BorderWidth="2"></asp:CheckBox>
+                <asp:CheckBox ID="ckbExibeSEI" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;SEI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="160px" BorderWidth="2"></asp:CheckBox>
 
             </div>
 
@@ -178,8 +178,19 @@
         
         <asp:Panel runat="server" ID="PanelGrafica" BorderStyle="Double" GroupingText="Grafica" Visible="False">
             <div id="DivGrafica">
-                <div class="row">                 
-                    <div class="col-1">
+                <div class="row">   
+                    <div class="col-8"> 
+                    <asp:CheckBoxList ID="CkbListGraficaSetor" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem>Central&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Grafica&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Farmácia&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>SND&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Manutenção&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Mecanica&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem> Estoque Laboratorio</asp:ListItem>
+                    </asp:CheckBoxList>
+                        </div>
+                   <%-- <div class="col-1">
                         <asp:CheckBox ID="ckbCentral" Text=" Central" runat="server"></asp:CheckBox>
                     </div>
                     <div class="col-1">
@@ -202,7 +213,7 @@
                     <div class="col-2">
                         <asp:CheckBox ID="ckbEstoqueLab" Text=" Estoque Laboratorio" runat="server"></asp:CheckBox>
 
-                    </div>
+                    </div>--%>
                 </div>
                 <hr />
                 <div class="row">
@@ -215,6 +226,7 @@
                       <div class="col-1">
                         <asp:Label runat="server" ID="labelGraficaCota" Text="Cota:"></asp:Label>
                     </div>
+                </div>
                     </div>
                     <%--<div class="col-0.5">
                         <asp:Label runat="server" ID="labelnovoGrafica" Text="Novo:"></asp:Label>
@@ -238,7 +250,15 @@
                   <%--  <div class="col-1">
                         <asp:Label runat="server" ID="labelGraficaCota" Text="Cota:"></asp:Label>
                     </div>--%>
-                    <div class="col-1">
+                    <div class="col-5">
+                    <asp:RadioButtonList ID="RblCota" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem>Diária&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Semanal&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Quizenal&nbsp;&nbsp;</asp:ListItem>
+                        <asp:ListItem>Mensal</asp:ListItem>
+                    </asp:RadioButtonList>
+                        </div>
+                   <%-- <div class="col-1">
                         <asp:RadioButton ID="rdbDiaria" Text="&nbspDiária" runat="server" GroupName="cotaGrafica" Width="150"></asp:RadioButton>
                     </div>
                     <div class="col-1.5">
@@ -249,7 +269,7 @@
                     </div>
                     <div class="col-1.5">
                         <asp:RadioButton ID="rdbMensal" Text="&nbspMensal" runat="server" GroupName="cotaGrafica"></asp:RadioButton>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </asp:Panel>   
