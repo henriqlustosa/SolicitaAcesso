@@ -122,6 +122,8 @@ public partial class Solicitar : System.Web.UI.Page
 
         d.status_Sei = "S";
         SolicitaAcessoDAO.GravaDadosSei(d);
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "Sei");
+
     }
 
     private void cadastrarOSmanutencao()
@@ -133,6 +135,8 @@ public partial class Solicitar : System.Web.UI.Page
        
         d.status_os_manutencao = "S";
         SolicitaAcessoDAO.GravaDadosOSmanutencao(d);
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "OS_manutencao");
+
     }
 
     private void cadastrarGrafica()
@@ -154,6 +158,7 @@ public partial class Solicitar : System.Web.UI.Page
         }
 
         SolicitaAcessoDAO.GravaDadosGrafica(d);
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "Grafica");
 
         //d.setor_solicitado_Grafica = 
     }
@@ -168,6 +173,9 @@ public partial class Solicitar : System.Web.UI.Page
         d.dataAdmissao = txtDtAdmissao.Text;    
         d.status_Simproc = "S";
         SolicitaAcessoDAO.GravaDadosSImproc(d);
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "Simproc");
+
+
     }
 
     private void cadastrarSGH()
@@ -184,7 +192,14 @@ public partial class Solicitar : System.Web.UI.Page
         d.PS_Desc = txtSGHProntoSocorro.Text;
         d.status_SGH = "S";
         SolicitaAcessoDAO.GravaDadosSGH(d);
-    }
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "SGH");
+
+      //    ,[Simproc] = @Simproc
+      //,[Grafica] = @Grafica
+      //,[OS_manutencao] = @OS_manutencao
+      //,[Sei] = @Sei
+
+}
 
     private void cadastrarRedeCorporativa()
     {
@@ -208,8 +223,11 @@ public partial class Solicitar : System.Web.UI.Page
         d.PastaEspecifica = txtEspecificarRedeCorporativa.Text;
         d.status_redeCoorporativa = "S";
         SolicitaAcessoDAO.GravaDadosRedeCorporativa(d);
-
-    }
+        
+        SolicitaAcessoDAO.GravaSolicitacoes_setores_Update(Convert.ToInt32(labelIdChamado.Text), "RedeCorporativa");
+    
+  
+}
 
     private void cadastrarDadosDoSolicitante()
     {
@@ -218,23 +236,21 @@ public partial class Solicitar : System.Web.UI.Page
         d.RF_Funcionario = Convert.ToInt32(txtRF.Text);
         d.login = txtLogin.Text;
         d.cargoFuncionario = txtCargo.Text;
-        d.ramal1 = Convert.ToInt32(txtRamal.Text);
+        d.ramal1 = txtRamal.Text + " / " + txtRamal_2.Text;
         d.lotacao = txtLotacao.Text;
         d.dtSolicitacao = DateTime.Now;
         d.NomeSolicitante_Coordenador = txtSolicitante.Text;
-
+        d.eMail = emailCoordenador.Text;
 
         bool Result = SolicitaAcessoDAO.GravaDadosSolicitacao(d);
         labelIdChamado.Text = Convert.ToString(SolicitaAcessoDAO.pegaID_BancoDeDados(d.dtSolicitacao, d.RF_Funcionario));
 
-        ////if (CkbExibeRedeCorporativa.Checked == true && Result == false)
-        ////{
-        ////    DadosRedeCoorporativa r = new DadosRedeCoorporativa();
-        ////    r.id_chamado_rede_corporativa = Convert.ToInt32(labelIdChamado.Text);
-        ////}
+       
+  
 
         if (Result == false)
         {
+            SolicitaAcessoDAO.GravaSolicitacoes_setores(Convert.ToInt32(labelIdChamado.Text));
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "mensagem", "alert('Solicitação Gravada com suecesso!');", true);
             LabelJaExiste.Text = "NAO";
         }
@@ -251,8 +267,10 @@ public partial class Solicitar : System.Web.UI.Page
         DadosCoordenador lista = new DadosCoordenador();
         lista = SolicitaAcessoDAO.GetDadosDosCoordenadoresPaginaSolicita(pegaNomeLoginUsuario.Text);
         txtRamal.Text = lista.ramal1.ToString();
+        txtRamal_2.Text = lista.ramal2.ToString();
         txtLotacao.Text = lista.setorCoordenador;
         txtSolicitante.Text = lista.NomeCoordenador;
+        emailCoordenador.Text = lista.eMail;
     }
   
 }

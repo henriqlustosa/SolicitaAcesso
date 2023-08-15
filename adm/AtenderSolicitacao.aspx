@@ -1,96 +1,67 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Solicitar.aspx.cs" Inherits="Solicitar" %>
+﻿<%@ Page Title="Atender Solicitação" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AtenderSolicitacao.aspx.cs" Inherits="adm_AtenderSolicitacao" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.mask.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <link href="js/jquery-ui.css" rel="stylesheet" />
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script type="text/javascript">
-        window.document.onkeydown = CheckEnter;
-        function CheckEnter() {
-            if (event.keyCode == 13)
-                return false;
-            return true;
-        }
-    </script>
-    <div class="container">
-        <h4 class="text-center">Solicitação de Acesso à Rede e Sistemas HSPM </h4>
-                <asp:Label ID="LabelJaExiste" runat="server" Text="" Visible="False"></asp:Label>
-        <asp:Label ID="pegaNomeLoginUsuario" runat="server" Text="" Visible="False"></asp:Label>
-        <asp:Label runat="server" ID="labelIdChamado" Text="Label" Visible="False"></asp:Label>
-        <div class="row">
-            <%--  SGH--%>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+     <asp:Label ID="pegaNomeLoginUsuario" runat="server" Text="" Visible="False"></asp:Label>
+
+    <div class="row">            
+                <asp:CheckBox ID="CkbExibeRedeCorporativa" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>           
+                <asp:CheckBox ID="ckbExibeSGH" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>         
+                <asp:CheckBox ID="ckbExibeSimproc" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>          
+                <asp:CheckBox ID="ckbExibeGrafica" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>            
+                <asp:CheckBox ID="ckbExibeOSmanutencao" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>            
+                <asp:CheckBox ID="ckbExibeSEI" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        </div>
+
+
+     <div class="container">
+        <h4 class="text-center">Atender Solicitação </h4>
+
+          <div class="row">          
             <div class="col-4">
                 Nome:
-                 <asp:TextBox ID="txtNomeFuncionario" runat="server" class="form-control"></asp:TextBox>
-            </div>
-            <asp:Label ID="emailCoordenador" runat="server" Text="" Visible="False"></asp:Label>
-            <div class="col-3">
-                RF:
-                 <asp:TextBox ID="txtRF" runat="server" class="form-control"></asp:TextBox>
+          
+                 <asp:Label ID="txtNomeFuncionario" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-2">
+                RF:
+                 <asp:Label ID="txtRF" runat="server" class="form-control"></asp:Label>
+            </div>
+            <div class="col-1.5">
                 Login:
-                 <asp:TextBox ID="txtLogin" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtLogin" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-3">
                 Cargo:
-                 <asp:TextBox ID="txtCargo" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtCargo" runat="server" class="form-control"></asp:Label>
+            </div>
+                <div class="col-1.5">
+                E-mail:
+                 <asp:Label ID="txtEmail" runat="server" class="form-control"></asp:Label>
             </div>
         </div>
         <div class="row">
-            <div class="col-1">
+            <div class="col-2">
                 Ramal:
-                 <asp:TextBox ID="txtRamal" runat="server" class="form-control"></asp:TextBox>
-            </div>
-             <div class="col-1">
-                Ramal-2:
-                 <asp:TextBox ID="txtRamal_2" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtRamal" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-4">
                 Lotação:
-                 <asp:TextBox ID="txtLotacao" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtLotacao" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-2">
                 Data do Pedido:
-                 <asp:TextBox ID="txtData" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtData" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-4">
                 Solicitante:
-                 <asp:TextBox ID="txtSolicitante" runat="server" class="form-control"></asp:TextBox>
+                 <asp:Label ID="txtSolicitante" runat="server" class="form-control"></asp:Label>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-2">
-                <asp:CheckBox ID="CkbExibeRedeCorporativa" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Rede Corporativa &nbsp; " Width="180px" BorderWidth="2"></asp:CheckBox>
-            </div>
-            <div class="col-2">
-                <asp:CheckBox ID="ckbExibeSGH" runat="server" AutoPostBack="True" Text="&nbsp;SGH &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" class="form-control" BorderWidth="2"></asp:CheckBox>
-            </div>
-            <div class="col-2">
-                <asp:CheckBox ID="ckbExibeSimproc" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Simproc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
-            </div>
+         <br />
 
-            <div class="col-2">
-                <asp:CheckBox ID="ckbExibeGrafica" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;Grafica &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
-
-            </div>
-            <div class="col-2">
-                <asp:CheckBox ID="ckbExibeOSmanutencao" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;OS-Manutenção &nbsp;&nbsp;" Width="180px" BorderWidth="2"></asp:CheckBox>
-
-            </div>
-            <div class="col-2">
-                <asp:CheckBox ID="ckbExibeSEI" runat="server" AutoPostBack="True" class="form-control" Text="&nbsp;SEI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Width="160px" BorderWidth="2"></asp:CheckBox>
-
-            </div>
-
-        </div>
-        <br />
-        <asp:Panel runat="server" ID="PanelRedeCorporativa" BorderStyle="Double" GroupingText="Rede Corporativa" Visible="False" Font-Italic="True">
+           <asp:Panel runat="server" ID="PanelRedeCorporativa" BorderStyle="Double" GroupingText="Rede Corporativa" Visible="False" Font-Italic="True">
 
             <div id="DivRedeCorporativa">
                 <div class="row">
@@ -332,11 +303,8 @@
         </div>
             </asp:Panel>
 
-        <div class="nav justify-content-center m-4">
-            <asp:Button ID="btnCadastrar" runat="server" class="btn btn-outline-primary" Text="Cadastrar"
-                Height="40px" Width="91px" OnClick="btnCadastrar_Click" />
-        </div>
-    </div>
-    
+
+         </div>
+
 </asp:Content>
 

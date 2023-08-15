@@ -59,7 +59,7 @@ public partial class Solicitar : System.Web.UI.Page
         d.RF_Funcionario = Convert.ToInt32(txtRF.Text);
         d.login = txtLogin.Text;
         d.cargoFuncionario = txtCargo.Text;
-        d.ramal1 = Convert.ToInt32(txtRamal.Text);
+        d.ramal1 = txtRamal.Text;
         d.lotacao = txtLotacao.Text;
         d.dtSolicitacao = DateTime.Now;
         d.NomeSolicitante_Coordenador = txtSolicitante.Text;

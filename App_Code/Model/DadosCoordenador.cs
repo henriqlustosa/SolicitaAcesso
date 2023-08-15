@@ -12,8 +12,8 @@ public class DadosCoordenador
     public string NomeCoordenador { get; set; }
     public int RF_Coordenador { get; set; }
     public string eMail { get; set; }
-    public int ramal1 { get; set; }
-    public int ramal2 { get; set; }
+    public string ramal1 { get; set; }
+    public string ramal2 { get; set; }
     public string setorCoordenador { get; set; }
     public string loginCoordenador { get; set; }
 }

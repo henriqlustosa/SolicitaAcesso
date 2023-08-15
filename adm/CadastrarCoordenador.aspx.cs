@@ -29,12 +29,8 @@ public partial class adm_CadastrarCoordenador : System.Web.UI.Page
             D.NomeCoordenador = txtNomeCoordenador.Text;
             D.RF_Coordenador = Convert.ToInt32(txtRF.Text);
             D.eMail = txtEmail.Text + "@hspm.sp.gov.br";
-            D.ramal1 = Convert.ToInt32(txtRamal1.Text);
-            if (txtRamal2.Text=="" || txtRamal2.Text.Length<4)
-            {
-                D.ramal2 = 0;
-            }
-            D.ramal2 = Convert.ToInt32(txtRamal2.Text);
+            D.ramal1 = txtRamal1.Text;          
+            D.ramal2 = txtRamal2.Text;
             D.setorCoordenador = txtSetor.Text;
             D.loginCoordenador = ddlLogin.Text;
             SolicitaAcessoDAO.GravaDadosCoordenador(D);

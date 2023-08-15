@@ -100,8 +100,8 @@ public class SolicitaAcessoDAO
                     d.RF_Coordenador = dr1.GetInt32(2);
                     d.loginCoordenador = dr1.IsDBNull(3) ? "" : dr1.GetString(3);
                     d.eMail = dr1.IsDBNull(4) ? "" : dr1.GetString(4);
-                    d.ramal1 = dr1.GetInt32(5);
-                    d.ramal2 = dr1.GetInt32(6);
+                    d.ramal1 = dr1.IsDBNull(5) ? "" : dr1.GetString(5);
+                    d.ramal2 = dr1.IsDBNull(6) ? "" : dr1.GetString(6);
                     d.setorCoordenador = dr1.IsDBNull(7) ? "" : dr1.GetString(7);
                     lista.Add(d);
                 }
@@ -131,12 +131,12 @@ public class SolicitaAcessoDAO
     public static DadosCoordenador GetDadosDosCoordenadoresPaginaSolicita(string login)
     {
         DadosCoordenador d = new DadosCoordenador();
-        var lista = new DadosCoordenador();
+        //var lista = new DadosCoordenador();
         using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
         {
             SqlCommand cmm = com.CreateCommand();
 
-            string sqlConsulta = @"SELECT [id],[nome_Coordenador],[ramal_Coordenador],[setor_Coordenador] 
+            string sqlConsulta = @"SELECT [id],[nome_Coordenador],[ramal_Coordenador],[ramal_2_Coordenador],[setor_Coordenador],[e_mail_Coordenador] 
      FROM [SolicitaAcesso].[dbo].[Coordenador_Dados] where login_Coordenador='" + login + "'";
             cmm.CommandText = sqlConsulta;
             try
@@ -147,9 +147,10 @@ public class SolicitaAcessoDAO
                 {
                     d.id = dr1.GetInt32(0);
                     d.NomeCoordenador = dr1.IsDBNull(1) ? "" : dr1.GetString(1);
-                    d.ramal1 = dr1.GetInt32(2);
-                    d.setorCoordenador = dr1.IsDBNull(3) ? "" : dr1.GetString(3);
-
+                    d.ramal1 = dr1.IsDBNull(2) ? "" : dr1.GetString(2);
+                    d.ramal2 = dr1.IsDBNull(3) ? "" : dr1.GetString(3);
+                    d.setorCoordenador = dr1.IsDBNull(4) ? "" : dr1.GetString(4);
+                    d.eMail= dr1.IsDBNull(5) ? "" : dr1.GetString(5);
                 }
             }
             catch (Exception ex)
@@ -180,23 +181,23 @@ public class SolicitaAcessoDAO
            ,[ramal]
            ,[lotacao]
            ,[dataSolicitacao]
-           ,[solicitante]
-           ,[email_funcionario]
-           ,[ativa_Solicitacao])"
-         + " VALUES (@nome_funcionario,@rf,@login,@cargo,@ramal,@lotacao,@dataSolicitacao,@solicitante,@email_funcionario,@ativa_Solicitacao)";
+           ,[solicitante]           
+           ,[ativa_Solicitacao]
+           ,[email_coordenador])"
+         + " VALUES (@nome_funcionario,@rf,@login,@cargo,@ramal,@lotacao,@dataSolicitacao,@solicitante,@ativa_Solicitacao,@email_coordenador)";
 
                     SqlCommand commd = new SqlCommand(strQuery, com);
                     commd.Parameters.Add("@nome_funcionario", SqlDbType.VarChar).Value = Dados.NomeFuncionario;
                     commd.Parameters.Add("@rf", SqlDbType.Int).Value = Dados.RF_Funcionario;
                     commd.Parameters.Add("@login", SqlDbType.VarChar).Value = Dados.login;
                     commd.Parameters.Add("@cargo", SqlDbType.VarChar).Value = Dados.cargoFuncionario;
-                    commd.Parameters.Add("@ramal", SqlDbType.Int).Value = Dados.ramal1;
+                    commd.Parameters.Add("@ramal", SqlDbType.VarChar).Value = Dados.ramal1;
                     commd.Parameters.Add("@lotacao", SqlDbType.VarChar).Value = Dados.lotacao;
                     commd.Parameters.Add("@dataSolicitacao", SqlDbType.DateTime).Value = Dados.dtSolicitacao;
                     commd.Parameters.Add("@solicitante", SqlDbType.VarChar).Value = Dados.NomeSolicitante_Coordenador;
-                    commd.Parameters.Add("@email_funcionario", SqlDbType.VarChar).Value = Dados.eMail = "Não Informado";
                     commd.Parameters.Add("@ativa_Solicitacao", SqlDbType.VarChar).Value = Dados.eMail = "S";
-
+                    commd.Parameters.Add("@email_coordenador", SqlDbType.VarChar).Value = Dados.eMail = Dados.eMail;
+                    
                     commd.CommandText = strQuery;
                     com.Open();
                     commd.ExecuteNonQuery();
@@ -448,6 +449,196 @@ public class SolicitaAcessoDAO
             {
                 string erro = ex.Message;
             }
+        }
+    }
+
+    public static void GravaSolicitacoes_setores( int Id_chamado)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"INSERT INTO [dbo].[Setores_Solicitados]
+           ([Id_Solicitacoes_setores]) VALUES (@Id_Solicitacoes_setores)";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                commd.Parameters.Add("@Id_Solicitacoes_setores", SqlDbType.Int).Value = Id_chamado;
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
+
+    public static void GravaSolicitacoes_setores_Update(int Id_chamado, string nomeCampo)
+    {
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            try
+            {
+                string strQuery = @"UPDATE [dbo].[Setores_Solicitados]
+   SET [" + nomeCampo + "]='S' WHERE Id_Solicitacoes_setores=" + Id_chamado + "";
+
+                SqlCommand commd = new SqlCommand(strQuery, com);                               
+                commd.CommandText = strQuery;
+                com.Open();
+                commd.ExecuteNonQuery();
+                com.Close();
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+            }
+        }
+    }
+
+    public static List<DadosSolicitacoesSetores> MostraSolicitacoesNaTelaStatus()
+    {
+
+        var lista = new List<DadosSolicitacoesSetores>();
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+
+        {
+            try
+            {
+                string strQuery = @"SELECT [id_chamado],[nome_funcionario],[rf],[login],[cargo],[ramal],[dataSolicitacao]
+      ,[RedeCorporativa],[SGH],[Simproc],[Grafica],[OS_manutencao],[Sei]  FROM [SolicitaAcesso].[dbo].[Vw_MostraSetoresSolicitados]";
+                com.Open();
+                SqlCommand commd = new SqlCommand(strQuery, com);
+                SqlDataReader dr = commd.ExecuteReader();
+                while (dr.Read())
+                {
+                    DadosSolicitacoesSetores l = new DadosSolicitacoesSetores();
+
+                    l.id_Solicitacao = dr.GetInt32(0);
+                    l.Nome_funcionario = dr.IsDBNull(1) ? null : dr.GetString(1);
+                    l.rf_funcionario = dr.GetInt32(2);
+                    l.login_do_funcionario = dr.IsDBNull(3) ? null : dr.GetString(3);
+                    l.Cargo_Funcionario = dr.IsDBNull(4) ? null : dr.GetString(4);
+                    l.Ramal = dr.IsDBNull(5) ? null : dr.GetString(5);
+                    DateTime dt = dr.GetDateTime(6);
+                    l.dataSolicitacao = dt.ToShortDateString();
+                    l.RedeCorporativa = dr.IsDBNull(7) ? null : dr.GetString(7);
+                    l.SGH = dr.IsDBNull(8) ? null : dr.GetString(8);
+                    l.Simproc = dr.IsDBNull(9) ? null : dr.GetString(9);
+                    l.Grafica = dr.IsDBNull(10) ? null : dr.GetString(10);
+                    l.OS_manutencao = dr.IsDBNull(11) ? null : dr.GetString(11);
+                    l.Sei = dr.IsDBNull(12) ? null : dr.GetString(12);
+                    
+                    if (l.RedeCorporativa == "S")
+                    {
+                        l.SetoresConcatenados = "( Rede corporativa ) ";
+                    }
+                    if (l.SGH == "S")
+                    {
+                        l.SetoresConcatenados += "( SGH ) ";
+                    }
+                    if (l.Simproc == "S")
+                    {
+                        l.SetoresConcatenados += "( Simproc ) ";
+                    }
+                    if (l.Grafica == "S")
+                    {
+                        l.SetoresConcatenados += "( Grafica ) ";
+                    }
+                    if (l.OS_manutencao == "S")
+                    {
+                        l.SetoresConcatenados += "( OS manutenção ) ";
+                    }
+                    if (l.Sei == "S")
+                    {
+                        l.SetoresConcatenados += "( Sei ) ";
+                    }
+
+
+                    lista.Add(l);
+                }
+                com.Close();
+
+            }
+            catch (Exception ex)
+            {
+                string erro = ex.Message;
+                throw;
+            }
+            return lista;
+
+        }
+
+
+    }
+
+    public static DadosSolicitacao GetDadosDaSolitacaoParaAtender(int idChamado)
+    {        
+        DadosSolicitacao d = new DadosSolicitacao();
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            SqlCommand cmm = com.CreateCommand();
+            string sqlConsulta = @"SELECT *
+  FROM [SolicitaAcesso].[dbo].[Solicitante_Dados] where id_chamado="+ idChamado + "";
+            cmm.CommandText = sqlConsulta;
+            try
+            {
+                com.Open();
+                SqlDataReader dr1 = cmm.ExecuteReader();
+                while (dr1.Read())
+                {
+                    
+                    d.id_chamado_ = dr1.GetInt32(0);
+                    d.NomeFuncionario = dr1.IsDBNull(1) ? "" : dr1.GetString(1);
+                    d.RF_Funcionario = dr1.GetInt32(2);
+                    d.login = dr1.IsDBNull(3) ? "" : dr1.GetString(3);
+                    d.cargoFuncionario = dr1.IsDBNull(4) ? "" : dr1.GetString(4);
+                    d.ramal1 = dr1.IsDBNull(5) ? "" : dr1.GetString(5);
+                    d.lotacao = dr1.IsDBNull(6) ? "" : dr1.GetString(6);
+                    d.dtSolicitacao = dr1.GetDateTime(7);
+                    d.NomeSolicitante_Coordenador = dr1.IsDBNull(8) ? "" : dr1.GetString(8);                   
+                    d.eMail = dr1.IsDBNull(10) ? "" : dr1.GetString(10);                
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            return d;
+        }
+    }
+
+    //
+    public static DadosSetoresSolicitados_S GetSetoresCom_S(int idChamado)
+    {
+        DadosSetoresSolicitados_S d = new DadosSetoresSolicitados_S();
+        using (SqlConnection com = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SolicitaAcessoConnectionString"].ToString()))
+        {
+            SqlCommand cmm = com.CreateCommand();
+            string sqlConsulta = @"SELECT [RedeCorporativa],[SGH],[Simproc],[Grafica],[OS_manutencao],[Sei]
+  FROM [SolicitaAcesso].[dbo].[Vw_MostraSetoresSolicitados] where id_chamado=" + idChamado + "";
+            cmm.CommandText = sqlConsulta;
+            try
+            {
+                com.Open();
+                SqlDataReader dr1 = cmm.ExecuteReader();
+                while (dr1.Read())
+                {
+                    d.RedeCorporativa = dr1.IsDBNull(0) ? "" : dr1.GetString(0);
+                    d.SGH = dr1.IsDBNull(1) ? "" : dr1.GetString(1);
+                    d.Simproc = dr1.IsDBNull(2) ? "" : dr1.GetString(2);
+                    d.Grafica = dr1.IsDBNull(3) ? "" : dr1.GetString(3);
+                    d.OS_manutencao = dr1.IsDBNull(4) ? "" : dr1.GetString(4);
+                    d.Sei = dr1.IsDBNull(5) ? "" : dr1.GetString(5);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+            }
+            return d;
         }
     }
 }
