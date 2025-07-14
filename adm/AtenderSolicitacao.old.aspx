@@ -1,27 +1,23 @@
-﻿<%@ Page Title="Atender Solicitação" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AtenderSolicitacao.aspx.cs" Inherits="adm_AtenderSolicitacao" %>
+﻿<%@ Page Title="Atender Solicitação" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="AtenderSolicitacao.old.aspx.cs" Inherits="adm_AtenderSolicitacao" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <asp:Label ID="pegaNomeLoginUsuario" runat="server" Text="" Visible="False"></asp:Label>
-
-    <div class="row">            
-                <asp:CheckBox ID="CkbExibeRedeCorporativa" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>           
-                <asp:CheckBox ID="ckbExibeSGH" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>         
-                <asp:CheckBox ID="ckbExibeSimproc" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>          
-                <asp:CheckBox ID="ckbExibeGrafica" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>            
-                <asp:CheckBox ID="ckbExibeOSmanutencao" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>            
-                <asp:CheckBox ID="ckbExibeSEI" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
-        </div>
-
-
-     <div class="container">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:Label ID="pegaNomeLoginUsuario" runat="server" Text="" Visible="False"></asp:Label>
+    <asp:Label ID="id_Chamado" runat="server" Text="Label" Visible="False"></asp:Label>
+    <div class="row">
+        <asp:CheckBox ID="CkbExibeRedeCorporativa" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        <asp:CheckBox ID="ckbExibeSGH" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        <asp:CheckBox ID="ckbExibeSimproc" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        <asp:CheckBox ID="ckbExibeGrafica" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        <asp:CheckBox ID="ckbExibeOSmanutencao" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+        <asp:CheckBox ID="ckbExibeSEI" runat="server" AutoPostBack="True" Visible="False"></asp:CheckBox>
+    </div>
+    <div class="container">
         <h4 class="text-center">Atender Solicitação </h4>
-
-          <div class="row">          
+        <div class="row">
             <div class="col-4">
-                Nome:
-          
+                Nome do funcionario:          
                  <asp:Label ID="txtNomeFuncionario" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-2">
@@ -33,11 +29,11 @@
                  <asp:Label ID="txtLogin" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-3">
-                Cargo:
+                Cargo do funcionario:
                  <asp:Label ID="txtCargo" runat="server" class="form-control"></asp:Label>
             </div>
-                <div class="col-1.5">
-                E-mail:
+            <div class="col-1.5">
+                E-mail do Coordenador:
                  <asp:Label ID="txtEmail" runat="server" class="form-control"></asp:Label>
             </div>
         </div>
@@ -55,13 +51,12 @@
                  <asp:Label ID="txtData" runat="server" class="form-control"></asp:Label>
             </div>
             <div class="col-4">
-                Solicitante:
+                Solicitante (Coordenador/Chefia):
                  <asp:Label ID="txtSolicitante" runat="server" class="form-control"></asp:Label>
             </div>
         </div>
-         <br />
-
-           <asp:Panel runat="server" ID="PanelRedeCorporativa" BorderStyle="Double" GroupingText="Rede Corporativa" Visible="False" Font-Italic="True">
+        <br />
+        <asp:Panel runat="server" ID="PanelRedeCorporativa" BorderStyle="Double" GroupingText="Rede Corporativa" Visible="False" Font-Italic="True">
 
             <div id="DivRedeCorporativa">
                 <div class="row">
@@ -83,6 +78,10 @@
                     <div class="col-5">
                         <asp:TextBox ID="txtEspecificarRedeCorporativa" runat="server" class="form-control" BorderWidth="2"></asp:TextBox>
                     </div>
+                </div>
+                <div class="nav justify-content-center m-3">
+                    <asp:Button ID="btnRedeCorporativa" runat="server" class="btn btn-outline-primary" Text="Finalizar Rede Corp."
+                        Height="40px" Width="170px" OnClick="btnRedeCorporativa_Click" />
                 </div>
             </div>
         </asp:Panel>
@@ -122,10 +121,12 @@
                         <asp:TextBox ID="txtSGHProntoSocorro" runat="server" class="form-control" BorderWidth="2"></asp:TextBox>
                     </div>
                 </div>
-
+                <div class="nav justify-content-center m-3">
+                    <asp:Button ID="bntSGH" runat="server" class="btn btn-outline-primary" Text="Finalizar SGH "
+                        Height="40px" Width="170px" OnClick="bntSGH_Click" />
+                </div>
             </div>
         </asp:Panel>
-      
         <asp:Panel runat="server" ID="PanelSimproc" BorderStyle="Double" GroupingText="Simproc" Visible="False">
             <div id="DivSimproc">
                 <div class="row">
@@ -149,162 +150,122 @@
                         <asp:TextBox ID="txtDtAdmissao" runat="server" class="form-control" BorderWidth="2"></asp:TextBox>
                     </div>
                 </div>
+                <div class="nav justify-content-center m-3">
+                    <asp:Button ID="btnSimproc" runat="server" class="btn btn-outline-primary" Text="Finalizar Simproc "
+                        Height="40px" Width="170px" OnClick="btnSimproc_Click" />
+                </div>
             </div>
         </asp:Panel>
-        
         <asp:Panel runat="server" ID="PanelGrafica" BorderStyle="Double" GroupingText="Grafica" Visible="False">
             <div id="DivGrafica">
-                <div class="row">   
-                    <div class="col-8"> 
-                    <asp:CheckBoxList ID="CkbListGraficaSetor" runat="server" RepeatDirection="Horizontal">
-                        <asp:ListItem>Central&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem>Grafica&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem>Farmácia&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem>SND&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem>Manutenção&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem>Mecanica&nbsp;&nbsp;</asp:ListItem>
-                        <asp:ListItem> Estoque Laboratorio</asp:ListItem>
-                    </asp:CheckBoxList>
-                        </div>
-                   <%-- <div class="col-1">
-                        <asp:CheckBox ID="ckbCentral" Text=" Central" runat="server"></asp:CheckBox>
+                <div class="row">
+                    <div class="col-8">
+                        <asp:CheckBoxList ID="CkbListGraficaSetor" runat="server" RepeatDirection="Horizontal">
+                            <asp:ListItem>Central&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem>Grafica&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem>Farmácia&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem>SND&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem>Manutenção&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem>Mecanica&nbsp;&nbsp;</asp:ListItem>
+                            <asp:ListItem> Estoque Laboratorio</asp:ListItem>
+                        </asp:CheckBoxList>
                     </div>
-                    <div class="col-1">
-                        <asp:CheckBox ID="ckbGrafica" Text=" Grafica" runat="server"></asp:CheckBox>
-                    </div>
-                    <div class="col-1.5">
-                        <asp:CheckBox ID="ckbfarmacia" Text="Farmácia" runat="server"></asp:CheckBox>
-                    </div>
-                    <div class="col-1">
-                        <asp:CheckBox ID="ckbSND" Text=" SND" runat="server"></asp:CheckBox>
-                    </div>              
-                    
-                    <div class="col-1.5">
-                        <asp:CheckBox ID="ckbManutencao" Text=" Manutenção" runat="server" Width="120"></asp:CheckBox>
-                    </div>
-                    <div class="col-1.5">
-                        <asp:CheckBox ID="ckbMecanica" Text=" Mecanica" runat="server" Width="110"></asp:CheckBox>
-
-                    </div>
-                    <div class="col-2">
-                        <asp:CheckBox ID="ckbEstoqueLab" Text=" Estoque Laboratorio" runat="server"></asp:CheckBox>
-
-                    </div>--%>
                 </div>
                 <hr />
                 <div class="row">
                     <div class="col-2">
                         <asp:Label runat="server" ID="labelNcentroCusto" Text="Nº Centro de Custo(s)"></asp:Label>
                     </div>
-                      <div class="col-2">
+                    <div class="col-2">
                         <asp:Label runat="server" ID="labelGraficaCpf" Text="CPF:"></asp:Label>
                     </div>
-                      <div class="col-1">
+                    <div class="col-1">
                         <asp:Label runat="server" ID="labelGraficaCota" Text="Cota:"></asp:Label>
                     </div>
                 </div>
-                    </div>
-                    <%--<div class="col-0.5">
-                        <asp:Label runat="server" ID="labelnovoGrafica" Text="Novo:"></asp:Label>
-                    </div>--%>
-                <div class="row">
-                    <div class="col-2">
-                        <asp:TextBox ID="txtNcentroDeCustoGrafica" runat="server" Width="160"></asp:TextBox>
-                    </div>
-                   <%-- <div class="col-1">
-                    </div>--%>
-                  <%--  <div class="col-0.5">
-                        <asp:Label runat="server" ID="labelGraficaCpf" Text="CPF:"></asp:Label>
-                    </div>--%>
-                    <div class="col-2">
-                        <asp:TextBox ID="txtCPFgrafica" runat="server" Width="150"></asp:TextBox>
-                    </div>
-                <%--</div>--%>
-            <%--    <hr />
-                <div class="row">--%>
-
-                  <%--  <div class="col-1">
-                        <asp:Label runat="server" ID="labelGraficaCota" Text="Cota:"></asp:Label>
-                    </div>--%>
-                    <div class="col-5">
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <asp:TextBox ID="txtNcentroDeCustoGrafica" runat="server" Width="160"></asp:TextBox>
+                </div>
+                <div class="col-2">
+                    <asp:TextBox ID="txtCPFgrafica" runat="server" Width="150"></asp:TextBox>
+                </div>
+                <div class="col-5">
                     <asp:RadioButtonList ID="RblCota" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem>Diária&nbsp;&nbsp;</asp:ListItem>
                         <asp:ListItem>Semanal&nbsp;&nbsp;</asp:ListItem>
                         <asp:ListItem>Quizenal&nbsp;&nbsp;</asp:ListItem>
                         <asp:ListItem>Mensal</asp:ListItem>
                     </asp:RadioButtonList>
-                        </div>
-                   <%-- <div class="col-1">
-                        <asp:RadioButton ID="rdbDiaria" Text="&nbspDiária" runat="server" GroupName="cotaGrafica" Width="150"></asp:RadioButton>
-                    </div>
-                    <div class="col-1.5">
-                        <asp:RadioButton ID="rdbSemanal" Text="&nbspSemanal" runat="server" GroupName="cotaGrafica" Width="100"></asp:RadioButton>
-                    </div>
-                    <div class="col-1.5">
-                        <asp:RadioButton ID="rdbQuinzenal" Text="&nbspQuinzenal" runat="server" GroupName="cotaGrafica" Width="100"></asp:RadioButton>
-                    </div>
-                    <div class="col-1.5">
-                        <asp:RadioButton ID="rdbMensal" Text="&nbspMensal" runat="server" GroupName="cotaGrafica"></asp:RadioButton>
-                    </div>--%>
                 </div>
+            </div>
+            <div class="nav justify-content-center m-3">
+                <asp:Button ID="btnGrafica" runat="server" class="btn btn-outline-primary" Text="Finalizar Grafica "
+                    Height="40px" Width="170px" OnClick="btnGrafica_Click" />
+            </div>
             <%--</div>--%>
-        </asp:Panel>   
+        </asp:Panel>
         <asp:Panel runat="server" ID="PanelOsManutencao" BorderStyle="Double" GroupingText="OS-Manutencao" Visible="False">
-      
-        <div id="OsManutencao">       
-            <div class="row"> 
-                 <div class="col-0.5">&nbsp;&nbsp;</div>
-                <div class="col-1.5">
-                    <asp:Label runat="server" Text="&nbsp;Nº Centro de Custo(s)"></asp:Label>
+            <div id="OsManutencao">
+                <div class="row">
+                    <div class="col-0.5">&nbsp;&nbsp;</div>
+                    <div class="col-1.5">
+                        <asp:Label runat="server" Text="&nbsp;Nº Centro de Custo(s)"></asp:Label>
+                    </div>
+                    <div class="col-0.5">
+                        <asp:Label runat="server" Text="Novo:"></asp:Label>
+                    </div>
+                    <div class="col-2">
+                        <asp:TextBox ID="txtCentroDeCustoOS_Manutencao" runat="server" Width="170"></asp:TextBox>
+                    </div>
+                    <div class="col-0.5">
+                    </div>
+                    <div class="col-0.5">
+                        <asp:Label runat="server" Text="CPF:"></asp:Label>
+                    </div>
+                    <div class="col-1">
+                        <asp:TextBox ID="txtCpfOS_Manutencao" runat="server"></asp:TextBox>
+                    </div>
                 </div>
-                <div class="col-0.5">
-                    <asp:Label runat="server" Text="Novo:"></asp:Label>
-                </div>
-                <div class="col-2">
-                    <asp:TextBox ID="txtCentroDeCustoOS_Manutencao" runat="server" Width="170"></asp:TextBox>
-                </div>
-                <div class="col-0.5">
-                </div>
-                <div class="col-0.5">
-                    <asp:Label runat="server" Text="CPF:"></asp:Label>
-                </div>
-                <div class="col-1">
-                    <asp:TextBox ID="txtCpfOS_Manutencao" runat="server"></asp:TextBox>
+                <div class="nav justify-content-center m-3">
+                    <asp:Button ID="btnOSmanutencao" runat="server" class="btn btn-outline-primary" Text="Finalizar Manutençâo "
+                        Height="40px" Width="170px" OnClick="btnOSmanutencao_Click" />
                 </div>
             </div>
-        </div>
-       </asp:Panel>
+        </asp:Panel>
         <asp:Panel runat="server" ID="PanelSEI" BorderStyle="Double" GroupingText="SEI" Visible="False">
-        <div id="DivSei">         
-            <div class="row">        
-                <div class="col-2">
-                    Sigla da(s) Unidade(S):
-                </div>
-                <div class="col-0.5">1-</div>
-                <div class="col-1.5">
-                    <asp:TextBox ID="txtSei_1" runat="server"></asp:TextBox>
-                </div>
-              &nbsp;
+            <div id="DivSei">
+                <div class="row">
+                    <div class="col-2">
+                        Sigla da(s) Unidade(S):
+                    </div>
+                    <div class="col-0.5">1-</div>
+                    <div class="col-1.5">
+                        <asp:TextBox ID="txtSei_1" runat="server"></asp:TextBox>
+                    </div>
+                    &nbsp;
                 <div class="col-0.5">2-</div>
-                <div class="col-1.5">
-                    <asp:TextBox ID="txtSei_2" runat="server"></asp:TextBox>
-                </div>
-                &nbsp;
+                    <div class="col-1.5">
+                        <asp:TextBox ID="txtSei_2" runat="server"></asp:TextBox>
+                    </div>
+                    &nbsp;
                 <div class="col-0.5">3-</div>
-                <div class="col-1.5">
-                    <asp:TextBox ID="txtSei_3" runat="server"></asp:TextBox>
-                </div>
-                &nbsp;
+                    <div class="col-1.5">
+                        <asp:TextBox ID="txtSei_3" runat="server"></asp:TextBox>
+                    </div>
+                    &nbsp;
                 <div class="col-0.5">4-</div>
-                <div class="col-1.5">
-                    <asp:TextBox ID="txtSei_4" runat="server"></asp:TextBox>
+                    <div class="col-1.5">
+                        <asp:TextBox ID="txtSei_4" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="nav justify-content-center m-3">
+                    <asp:Button ID="btnSei" runat="server" class="btn btn-outline-primary" Text="Finalizar SEI"
+                        Height="40px" Width="170px" OnClick="btnSei_Click" />
                 </div>
             </div>
-        </div>
-            </asp:Panel>
-
-
-         </div>
-
+        </asp:Panel>
+    </div>
 </asp:Content>
 

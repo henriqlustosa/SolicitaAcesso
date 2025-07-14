@@ -8,8 +8,10 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   
     <link href="css/masterPage.css" rel="stylesheet" />
-    <script defer src="bootstrap/js/bootstrap.min.js"></script>
-    <title>Solicitar acesso HSPM</title>
+
+ <%--   <script defer src="bootstrap/js/bootstrap.min.js"></script>--%>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Autoriza acesso HSPM</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
      <script type="text/javascript">
@@ -35,7 +37,8 @@
                 </a>
             </div>
             <div>
-                <h1 class="titleHeader">HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL - HSPM</h1>
+                <h6 class="titleHeader">HOSPITAL DO SERVIDOR PÚBLICO MUNICIPAL - HSPM</h6>         
+                 <%--  <h6 class="text-center text-danger"> <i>ADM</i></h6>  --%>              
             </div>
             <div>
                 <a>
@@ -48,58 +51,72 @@
                 <div id="menu">
                     <ul class="list-unstyled">
                         <li class="space-item">
-                            <a href="../Solicitar.aspx" class="nav-link px-0">
-                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Pagina Inicial</span>
+                            <a href="../aberto/PaginaInicial.aspx">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Página Inicial</span>
                             </a>
                         </li>
-                        <li class="space-item">
-                            <a href="../usuario/CadastarVisitanteExtra.aspx" class="nav-link px-0">
-                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Minhas Solicitaçoês</span>
+                         <li class="space-item">
+                            <a href="../funcionario/Solicitar.aspx">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Funcionário HSPM</span>
                             </a>
                         </li>
-                        <li class="space-item">
-                            <a href="../AlterarSenha.aspx" class="nav-link px-0">
+                         <li class="space-item">
+                            <a href="../terceiros/Terceiros.aspx">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Funcionário Terceiro</span>
+                            </a>
+                        </li>
+                        <li class="space-item">                            
+                            <a href="../aberto/MinhasSolicitacoes.aspx">
+                                <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Solicitações do Setor</span>
+                            </a>
+                        </li>
+                    <%--    <li class="space-item">
+                            <a href="../aberto/AlterarSenha.aspx">
                                 <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Alterar Senha</span>
                             </a>
-                        </li>
+                        </li>--%>
+                        
                     </ul>
-                    <br /><br />
+               <%-- informatica Inicio --%>
+                   <br /><br />
                       <div class="nav justify-content-xl-start">
-                            <input id="BtnAdm" type="button" value="Informatica" onclick="mostraAdm()" class="btn btn-outline-info border-0 border-white text-white font-italic btn-lg font-weight-bold" />
-                        </div>
+                           <%-- <input id="BtnAdm" type="button" value="Informatica" onclick="mostraAdm()" class="btn btn-outline-info border-0 border-white text-white font-italic btn-lg font-weight-bold" />--%>
+                      <asp:Button ID="BtnAdm" runat="server" Text="Informatica" CssClass="btn btn-outline-info border-0 border-white text-white font-italic btn-lg font-weight-bold" OnClientClick="mostraAdm(); return false;" />
+  
+                      </div>
                       <br />
-                        <div id="DivAdm" class="border" style='display: none;'>
-                             <li class="space-item">
-                                <a href="../adm/SolicitacoesAbertas.aspx" class="nav-link px-0">
-                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Solicitações</span>
-                                </a>
-                            </li> 
-                            <li class="space-item">
-                                <a href="../adm/CadastrarCoordenador.aspx" class="nav-link px-0">
+                        <div id="DivAdm" class="border" style='display: none;'>                                               
+                          <%--  <li class="space-item">
+                                <a href="../adm/CadastrarCoordenador.aspx">
                                     <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Cadastrar Coordenador</span>
                                 </a>
-                            </li>  
+                            </li>  --%>
                             <li class="space-item">
-                                <a href="../adm/CadastrarUsuario.aspx" class="nav-link px-0">
+                                <a href="../adm/CadastroDeUsuario.aspx">
                                     <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Cadastrar Usuário</span>
                                 </a>
                             </li>
-                            <li class="space-item">
-                                <a href="../adm/Permissao.aspx" class="nav-link px-0">
+                           <%-- <li class="space-item">
+                                <a href="../adm/Permissao.aspx">
                                     <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Permissão Usuário</span>
                                 </a>
                             </li>
-                            <li class="space-item">
-                                <a href="../adm/DeletarUsuario.aspx" class="nav-link px-0">
-                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Deletar Usuário</span>
+                       <li class="space-item">
+                                <a href="../adm/ResetSenha.aspx">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Reset Senha</span>
                                 </a>
                             </li>
+                            <li class="space-item">
+                                <a href="../adm/DeletarUsuario.aspx">
+                                    <span class="ms-1 d-none d-sm-inline p-menu labelMenu">Deletar Usuário</span>
+                                </a>
+                            </li>--%>
 
                         </div>
-                     <br /><br />
-                        <asp:LoginName ID="LoginName1" runat="server" class="text-white font-weight-bold" />
-                        <br /><br />
-                        <asp:LoginStatus ID="LoginStatus1" runat="server" class="text-white font-weight-bold"/>
+                     <%-- informatica Fim --%>
+                  
+                        <br />
+                        <asp:LoginStatus ID="LoginStatus1" runat="server" class="text-white font-weight-bold" LogoutAction="RedirectToLoginPage" LogoutText="Sair do Sistema" LoginText="Sair do Sistema" />
 
                 </div>
             </aside>
@@ -110,7 +127,12 @@
         </div>
         <footer class="spaceFooter fixed-bottom">
             <div>
-                <p class="paragraphFooter">Desenvolvido pelo setor de informática do HSPM - hspminformatica@hspm.sp.gov.br</p>
+                <p class="paragraphFooter">Desenvolvido pelo setor de informática do HSPM - hspminformatica@hspm.sp.gov.br
+                      &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp   &nbsp &nbsp &nbsp &nbsp 
+                  Usuário: <asp:Label ID="LabelNomeCompleto" runat="server" Text=""></asp:Label>
+                </p>
+              
+                
             </div>
         </footer>
     </form>

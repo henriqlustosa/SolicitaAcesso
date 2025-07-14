@@ -14,4 +14,7 @@ public class DadosSetoresSolicitados_S
     public string Grafica { get; set; }
     public string OS_manutencao { get; set; }
     public string Sei { get; set; }
+    public string Siga_Saude { get; set; }
+    public string DadosSolicitadosSGH { get; set; }
+
 }

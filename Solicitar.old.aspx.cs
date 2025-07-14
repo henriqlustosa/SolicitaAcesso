@@ -56,7 +56,7 @@ public partial class Solicitar : System.Web.UI.Page
     {
         DadosSolicitacao d = new DadosSolicitacao();
         d.NomeFuncionario = txtNomeFuncionario.Text;
-        d.RF_Funcionario = Convert.ToInt32(txtRF.Text);
+        d.RF_Funcionario = txtRF.Text;
         d.login = txtLogin.Text;
         d.cargoFuncionario = txtCargo.Text;
         d.ramal1 = txtRamal.Text;

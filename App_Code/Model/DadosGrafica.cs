@@ -8,11 +8,11 @@ using System.Web;
 /// </summary>
 public class DadosGrafica
 {
-    public int id_chamado_grafica { get; set; }
-    public string setor_solicitado_Grafica { get; set; }
+    public int id_chamado_grafica { get; set; }  
     public string N_centro_custo_grafica { get; set; }
+    public string N_centro_custo_grafica_antigo { get; set; }
     public string cpf_grafica { get; set; }
-    public string cota_grafica { get; set; }
+    
     public string status_grafica { get; set; }
 
 }

@@ -2,10 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.mask.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <link href="js/jquery-ui.css" rel="stylesheet" />
+    <script src="../js/jquery.js"></script>
+    <script src="../js/jquery.mask.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <link href="../js/jquery-ui.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     
@@ -18,7 +18,7 @@
         }
     </script>
     <div class="container">
-        <h4 class="text-center">Solicitação de Acesso à Rede e Sistemas HSPM </h4>
+        <h4 class="text-center">Autorização de Acesso à Rede e Sistemas HSPM </h4>
         <asp:label id="pegaNomeLoginUsuario" runat="server" text="" visible="False"></asp:label>
         <asp:label runat="server" id="labelIdChamado" text="Label" visible="False"></asp:label>
         <script type="text/javascript">

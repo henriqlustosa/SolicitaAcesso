@@ -1,0 +1,44 @@
+﻿using System;
+using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+
+public class ImportacaoExcel
+{
+    public void ImportarFuncionarios(string caminhoArquivoExcel, string conexaoSqlServer)
+    {
+        // String de conexão para arquivos Excel (para .xlsx)
+        string conexaoExcel = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + caminhoArquivoExcel + ";Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+
+        using (OleDbConnection conexaoOleDb = new OleDbConnection(conexaoExcel))
+        {
+            conexaoOleDb.Open();
+
+            // Supondo que os dados estão na primeira aba do Excel chamada "Sheet1$"
+            string consulta = "SELECT * FROM [Sheet1$]";
+            OleDbCommand comandoOleDb = new OleDbCommand(consulta, conexaoOleDb);
+
+            using (OleDbDataReader reader = comandoOleDb.ExecuteReader())
+            {
+                using (SqlConnection conexaoSql = new SqlConnection(conexaoSqlServer))
+                {
+                    conexaoSql.Open();
+
+                    while (reader.Read())
+                    {
+                        string sql = "INSERT INTO FuncionariosHSPM (f, v, nome, setor) VALUES (@f, @v, @nome, @setor)";
+                        using (SqlCommand comandoSql = new SqlCommand(sql, conexaoSql))
+                        {
+                            comandoSql.Parameters.AddWithValue("@f", reader["f"]);
+                            comandoSql.Parameters.AddWithValue("@v", reader["v"]);
+                            comandoSql.Parameters.AddWithValue("@nome", reader["nome"]);
+                            comandoSql.Parameters.AddWithValue("@setor", reader["setor"]);
+
+                            comandoSql.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

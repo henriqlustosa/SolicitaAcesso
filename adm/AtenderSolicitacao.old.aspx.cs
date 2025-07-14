@@ -9,18 +9,16 @@ public partial class adm_AtenderSolicitacao : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!this.IsPostBack)
-        {
-            string id1 = Request.QueryString["IdChamado"];
-            int id = Convert.ToInt32(id1);
-            carregarDadosSolicitante(id);
-            pegaNomeLoginUsuario.Text = User.Identity.Name.ToUpper();
-            verificaCBK_SituacaoNobanco(id);
-            verificaCBK();
-        }
-        
+
+        string id1 = Request.QueryString["IdChamado"];
+        int id = Convert.ToInt32(id1);
+        carregarDadosSolicitante(id);
+        id_Chamado.Text = id1;
+        pegaNomeLoginUsuario.Text = User.Identity.Name.ToUpper();
+        verificaCBK_SituacaoNobanco(Convert.ToInt32(id_Chamado.Text));
+        verificaCBK();
     }
-    
+
 
     private void carregarDadosSolicitante(int id)
     {
@@ -128,5 +126,53 @@ public partial class adm_AtenderSolicitacao : System.Web.UI.Page
         {
             PanelSEI.Visible = false;
         }
+    }
+
+    protected void btnRedeCorporativa_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "RedeCorporativa", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
+    }
+
+    protected void bntSGH_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "SGH", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
+    }
+
+    protected void btnSimproc_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "Simproc", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
+    }
+
+    protected void btnGrafica_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "Grafica", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
+    }
+
+    protected void btnOSmanutencao_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "OS_manutencao", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
+    }
+
+    protected void btnSei_Click(object sender, EventArgs e)
+    {
+        int idChamado = Convert.ToInt32(id_Chamado.Text);
+        SolicitaAcessoDAO.Atualiza_Solicitacoes_setores_Update(idChamado, "Sei", "C");
+        SolicitaAcessoDAO.Atualiza_Solicitante_dados_status(idChamado);
+        Response.Redirect("~/adm/AtenderSolicitacao.aspx?IdChamado=" + idChamado);
     }
 }
